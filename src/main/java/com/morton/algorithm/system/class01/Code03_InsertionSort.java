@@ -3,37 +3,35 @@ package com.morton.algorithm.system.class01;
 import java.util.Arrays;
 
 /**
- * 选择排序
+ * 插入排序
  *
  * @author MortonShaw
- * @date 2021/10/1 22:31
+ * @date 2021/10/2 22:41
  */
-public class Code01_SelectionSort {
+public class Code03_InsertionSort {
 
-    public static void selectionSort(int[] arr) {
+    public static void insertionSort(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
         }
-        // 0 ~ N-1，找到最小值，放到0位置上
-        // 1 ~ N-1，找到最小值，放到1位置上
-        // 2 ~ N-1，找到最小值，放到2位置上
-        // ... ...
-        // N-2 ~ N-1，找到最小值，放到N-2位置上
-        for (int i = 0; i < arr.length - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < arr.length; j++) {
-                minIndex = arr[minIndex] > arr[j] ? j : minIndex;
-            }
-            if (minIndex != i) {
-                swap(arr, i, minIndex);
+        // 1 ~ N-1
+        // 2 ~ N-1
+        // 3 ~ N-1
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = i; j > 0; j--) {
+                if (arr[j] < arr[j - 1]) {
+                    swap(arr, j, j - 1);
+                } else {
+                    break;
+                }
             }
         }
     }
 
     private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
     }
 
     // for test
@@ -104,7 +102,7 @@ public class Code01_SelectionSort {
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            selectionSort(arr1);
+            insertionSort(arr1);
             comparator(arr2);
             if (!isEqual(arr1, arr2)) {
                 succeed = false;
@@ -117,7 +115,7 @@ public class Code01_SelectionSort {
 
         int[] arr = generateRandomArray(maxSize, maxValue);
         printArray(arr);
-        selectionSort(arr);
+        insertionSort(arr);
         printArray(arr);
     }
 

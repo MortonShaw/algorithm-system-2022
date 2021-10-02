@@ -3,37 +3,35 @@ package com.morton.algorithm.system.class01;
 import java.util.Arrays;
 
 /**
- * 选择排序
+ * 冒泡排序
  *
  * @author MortonShaw
- * @date 2021/10/1 22:31
+ * @date 2021/10/2 22:11
  */
-public class Code01_SelectionSort {
+public class Code02_BubbleSort {
 
-    public static void selectionSort(int[] arr) {
+    public static void bubbleSort(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
         }
-        // 0 ~ N-1，找到最小值，放到0位置上
-        // 1 ~ N-1，找到最小值，放到1位置上
-        // 2 ~ N-1，找到最小值，放到2位置上
-        // ... ...
-        // N-2 ~ N-1，找到最小值，放到N-2位置上
-        for (int i = 0; i < arr.length - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < arr.length; j++) {
-                minIndex = arr[minIndex] > arr[j] ? j : minIndex;
+        // 0 ~ N-1，找到最大值，放在 N-1 位置上
+        // 0 ~ N-2
+        // 0 ~ N-3
+        for (int i = arr.length - 1; i > 0; i--) {
+            int maxIndex = 0;
+            for (int j = maxIndex + 1; j <= i; j++) {
+                maxIndex = arr[maxIndex] < arr[j] ? j : maxIndex;
             }
-            if (minIndex != i) {
-                swap(arr, i, minIndex);
+            if (maxIndex != i) {
+                swap(arr, maxIndex, i);
             }
         }
     }
 
     private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
     }
 
     // for test
@@ -104,7 +102,7 @@ public class Code01_SelectionSort {
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            selectionSort(arr1);
+            bubbleSort(arr1);
             comparator(arr2);
             if (!isEqual(arr1, arr2)) {
                 succeed = false;
@@ -117,7 +115,7 @@ public class Code01_SelectionSort {
 
         int[] arr = generateRandomArray(maxSize, maxValue);
         printArray(arr);
-        selectionSort(arr);
+        bubbleSort(arr);
         printArray(arr);
     }
 
