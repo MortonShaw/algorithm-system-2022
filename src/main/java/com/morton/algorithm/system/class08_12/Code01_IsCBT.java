@@ -15,6 +15,7 @@ public class Code01_IsCBT {
         nodeB.setLeft(nodeC);
 
         System.out.println(isCBT(nodeA));
+        System.out.println(isCBT2(nodeA));
     }
 
     static boolean isCBT(Node head) {
@@ -47,6 +48,36 @@ public class Code01_IsCBT {
                 if (left == null || right == null) {
                     self = true;
                 }
+            }
+        }
+
+        return true;
+    }
+
+    static boolean isCBT2(Node head) {
+        if (head == null) {
+            return true;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(head);
+
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            if (node == null) {
+                break;
+            }
+            // 子节点为空时全部加入，包括空节点
+            if (node.getLeft() != null || node.getRight() != null) {
+                queue.add(node.getLeft());
+                queue.add(node.getRight());
+            }
+        }
+
+        // 发现空节点后，后面不应有非空节点
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            if (node != null) {
+                return false;
             }
         }
 
