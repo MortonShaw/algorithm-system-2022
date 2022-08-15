@@ -2,11 +2,11 @@ package com.morton.algorithm.system.class08_12;
 
 public class Node {
 
-    String value;
+    int value;
     Node left;
     Node right;
 
-    public Node(String value) {
+    public Node(int value) {
         this.value = value;
     }
 
